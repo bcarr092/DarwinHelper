@@ -40,7 +40,7 @@ include_directories( ${EXTRA_INCLUDES} )
 message( STATUS "C source files found: ${SOURCES}" )
 message( STATUS "C header files found: ${HEADERS}" )
 
-add_library( ${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS} )
+add_library( ${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS} )
 
 target_link_libraries( ${PROJECT_NAME} cpcommon )
 
