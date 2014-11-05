@@ -2,8 +2,10 @@
 
 void
 darwin_print_code (
-                   CPC_LOG_LEVEL in_log_level,
-                   OSStatus      in_code
+                   CPC_LOG_LEVEL  in_log_level,
+                   CHAR*          in_file,
+                   INT32          in_line_number,
+                   OSStatus       in_code
                    )
 {
   if( noErr != in_code )
@@ -18,7 +20,13 @@ darwin_print_code (
       error_string[ 0 ] = error_string[ 5 ] = '\'';
       error_string[ 6 ] = '\0';
       
-      CPC_LOG( in_log_level, "Code: %s", error_string );
+      cpc_log (
+               in_log_level,
+               in_file,
+               in_line_number,
+               "Code: %s",
+               error_string
+               );
     }
   }
 }
@@ -62,14 +70,13 @@ darwin_convert_cfstring_to_char_string(
     }
     else
     {
-      CPC_LOG (
-               CPC_LOG_LEVEL_ERROR,
-               "Could not convert string %s",
-               CFStringGetCStringPtr  (
-                                       in_string_to_convert,
-                                       kCFStringEncodingASCII
-                                       )
-               );
+      CPC_ERROR (
+                 "Could not convert string %s",
+                 CFStringGetCStringPtr  (
+                                         in_string_to_convert,
+                                         kCFStringEncodingASCII
+                                         )
+                 );
       
       return( NULL );
     }

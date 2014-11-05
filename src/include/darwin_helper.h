@@ -8,6 +8,13 @@
 
 #include <cpcommon.h>
 
+/*! \def    DARWIN_PRINT_CODE
+    \brief  Wrapper to ensure the correct file and line are printed in the log
+            message when displaying the Darwin-specific error code.
+ */
+#define DARWIN_PRINT_CODE( in_log_level, in_code ) \
+ darwin_print_code( in_log_level, __FILE__, __LINE__, in_code )
+
 /*! \fn     void darwin_print_code (
               CPC_LOG_LEVEL in_log_level,
               OSStatus      in_code
@@ -23,13 +30,17 @@
             pg. 82
  
     \param  in_log_level  The log level to log the converted string
+    \param  in_file       The file name to display in the log
+    \param  in_line_number  The line number to be displayed in the log
     \param  in_code       The code to convert to its four character string
                           representation.
  */
 void
 darwin_print_code (
-                   CPC_LOG_LEVEL in_log_level,
-                   OSStatus      in_code
+                   CPC_LOG_LEVEL  in_log_level,
+                   CHAR*          in_file,
+                   INT32          in_line_number,
+                   OSStatus       in_code
                    );
 
 /*! \fn     CHAR* darwin_convert_cfstring_to_char_string (
