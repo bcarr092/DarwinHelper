@@ -1,47 +1,46 @@
-#include "darwinhelper.h"
+#include "darwin_helper.h"
 
-/** This code is taken from "Learning Core Audio - pg. 82"
- */
 void
 darwin_print_code (
-                   CPC_LOG_LEVEL log_level,
-                   OSStatus      code
+                   CPC_LOG_LEVEL in_log_level,
+                   OSStatus      in_code
                    )
 {
-  if( noErr != code )
+  if( noErr != in_code )
   {
     char error_string[ 7 ] = { 0 };
     
-    * ( UINT32 * ) ( error_string + 1 ) = CFSwapInt32HostToBig( code );
+    * ( UINT32 * ) ( error_string + 1 ) = CFSwapInt32HostToBig( in_code );
+    
     if( isprint( error_string[ 1 ] ) && isprint( error_string[ 2 ] )
        && isprint( error_string[ 3 ] ) && isprint( error_string[ 4 ] ) )
     {
       error_string[ 0 ] = error_string[ 5 ] = '\'';
       error_string[ 6 ] = '\0';
       
-      cpc_log( log_level, "Code: %s", error_string );
+      CPC_LOG( in_log_level, "Code: %s", error_string );
     }
   }
 }
 
 CHAR*
 darwin_convert_cfstring_to_char_string(
-                                       CFStringRef string_to_convert
+                                       CFStringRef in_string_to_convert
                                        )
 {
-  if( NULL == string_to_convert )
+  if( NULL == in_string_to_convert )
   {
     return( NULL );
   }
   else
   {
-    cpc_log (
+    CPC_LOG (
              CPC_LOG_LEVEL_TRACE,
              "Converting string: %s",
-             CFStringGetCStringPtr( string_to_convert, kCFStringEncodingASCII )
+             CFStringGetCStringPtr( in_string_to_convert, kCFStringEncodingASCII )
              );
     
-    CFIndex string_length = CFStringGetLength( string_to_convert );
+    CFIndex string_length = CFStringGetLength( in_string_to_convert );
     CFIndex string_max_length =
       CFStringGetMaximumSizeForEncoding( string_length, kCFStringEncodingASCII );
     
@@ -50,24 +49,24 @@ darwin_convert_cfstring_to_char_string(
     memset( c_string, 0, string_max_length + 1 );
     
     if( CFStringGetCString  (
-                             string_to_convert,
+                             in_string_to_convert,
                              c_string,
                              string_max_length + 1,
                              kCFStringEncodingASCII
                             )
        )
     {
-      cpc_log( CPC_LOG_LEVEL_TRACE, "Converted string: %s", c_string );
+      CPC_LOG( CPC_LOG_LEVEL_TRACE, "Converted string: %s", c_string );
       
       return( c_string );
     }
     else
     {
-      cpc_log (
+      CPC_LOG (
                CPC_LOG_LEVEL_ERROR,
                "Could not convert string %s",
                CFStringGetCStringPtr  (
-                                       string_to_convert,
+                                       in_string_to_convert,
                                        kCFStringEncodingASCII
                                        )
                );
