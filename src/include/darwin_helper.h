@@ -8,6 +8,8 @@
 
 #include <cpcommon.h>
 
+#define DARWIN_CODE_STRING_LENGTH 7
+
 /*! \def    DARWIN_PRINT_CODE
     \brief  Wrapper to ensure the correct file and line are printed in the log
             message when displaying the Darwin-specific error code.
@@ -59,5 +61,10 @@ CHAR*
 darwin_convert_cfstring_to_char_string (
                                         CFStringRef in_string_to_convert
                                         );
+
+CHAR*
+darwin_convert_code_to_cstring  (
+                                 OSStatus in_code
+                                 );
 
 #endif /* __DARWIN_HELPER_H__ */
