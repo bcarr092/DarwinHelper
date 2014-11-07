@@ -1,56 +1,6 @@
 #include "darwin_helper.h"
 
 CHAR*
-darwin_convert_code_to_cstring  (
-                                 OSStatus in_code
-                                 )
-{
-  CHAR* code = NULL;
-  
-  if( noErr != in_code )
-  {
-    code = ( CHAR* ) malloc( DARWIN_CODE_STRING_LENGTH * sizeof( CHAR ) );
-    
-    memset( code, 0, DARWIN_CODE_STRING_LENGTH * sizeof( CHAR ) );
-    
-    * ( UINT32 * ) ( code + 1 ) = CFSwapInt32HostToBig( in_code );
-    
-    if( isprint( code[ 1 ] ) && isprint( code[ 2 ] )
-       && isprint( code[ 3 ] ) && isprint( code[ 4 ] ) )
-    {
-      code[ 0 ] = code[ 5 ] = '\'';
-      code[ 6 ] = '\0';
-    }
-  }
-  
-  return( code );
-}
-
-void
-darwin_print_code (
-                   CPC_LOG_LEVEL  in_log_level,
-                   CHAR*          in_file,
-                   INT32          in_line_number,
-                   OSStatus       in_code
-                   )
-{
-  CHAR* cstring_code = darwin_convert_code_to_cstring( in_code );
-  
-  if( NULL != cstring_code )
-  {
-    cpc_log (
-             in_log_level,
-             in_file,
-             in_line_number,
-             "Code: %s",
-             cstring_code
-             );
-    
-    free( cstring_code );
-  }
-}
-
-CHAR*
 darwin_convert_cfstring_to_char_string(
                                        CFStringRef in_string_to_convert
                                        )
