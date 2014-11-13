@@ -14,12 +14,18 @@ darwin_convert_cfstring_to_char_string(
     CPC_LOG (
              CPC_LOG_LEVEL_TRACE,
              "Converting string: %s",
-             CFStringGetCStringPtr( in_string_to_convert, kCFStringEncodingASCII )
+             CFStringGetCStringPtr  (
+                                     in_string_to_convert,
+                                     kCFStringEncodingASCII
+                                     )
              );
     
     CFIndex string_length = CFStringGetLength( in_string_to_convert );
     CFIndex string_max_length =
-      CFStringGetMaximumSizeForEncoding( string_length, kCFStringEncodingASCII );
+      CFStringGetMaximumSizeForEncoding (
+                                         string_length,
+                                         kCFStringEncodingASCII
+                                         );
     
     CHAR* c_string = ( CHAR* ) malloc( string_max_length + 1 );
     
