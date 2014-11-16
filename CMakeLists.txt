@@ -19,15 +19,7 @@ set( SOURCES "${SOURCE_DIR}/darwin_helper.c" )
 
 set( HEADERS "${INCLUDE_DIR}/darwin_helper.h" )
 
-set( CPCOMMON_INCLUDE_DIR "${cpcommon_SOURCE_DIR}/src/include" )
-
-message (
-  STATUS
-  "Working with cpcommon source directory: ${CPCOMMON_INCLUDE_DIR}"
-        )
-
 include_directories( ${INCLUDE_DIR} )
-include_directories( ${CPCOMMON_INCLUDE_DIR} )
 
 find_path( CORE_FOUNDATION_INCLUDES "CoreFoundation/CoreFoundation.h" )
 
@@ -44,12 +36,29 @@ add_library( ${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS} )
 
 target_link_libraries( ${PROJECT_NAME} cpcommon )
 
+set( CPCOMMON_INCLUDE_DIR "${cpcommon_SOURCE_DIR}/src/include" )
+
+message (
+  STATUS
+  "Working with cpcommon source directory: ${CPCOMMON_INCLUDE_DIR}"
+        )
+
+include_directories( ${CPCOMMON_INCLUDE_DIR} )
+
 install (
           TARGETS ${PROJECT_NAME}
           ARCHIVE DESTINATION "${INSTALL_DIR}/lib"
           LIBRARY DESTINATION "${INSTALL_DIR}/lib"
         )
 install( FILES ${HEADERS} DESTINATION "${INSTALL_DIR}/include/${PROJECT_NAME}" )
+
+find_library( CORE_FOUNDATION_FRAMEWORK CoreFoundation )
+
+set( EXTRA_LIBS ${CORE_FOUNDATION_FRAMEWORK} )
+
+message( STATUS "Framework libraries: ${EXTRA_LIBS}" )
+
+target_link_libraries( ${PROJECT_NAME} ${EXTRA_LIBS} )
 
 find_package( Doxygen )
 
