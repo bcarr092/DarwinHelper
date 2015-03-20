@@ -1,3 +1,7 @@
+/*! \file   darwin_helper.c
+ 
+    \author Brent Carrara
+ */
 #include "darwin_helper.h"
 
 CHAR*

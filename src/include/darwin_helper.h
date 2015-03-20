@@ -1,5 +1,7 @@
 /*! \file   darwin_helper.h
     \brief  Darwin specific helper functions are defined in this file.
+ 
+    \author Brent Carrara
  */
 #ifndef __DARWIN_HELPER_H__
 #define __DARWIN_HELPER_H__
