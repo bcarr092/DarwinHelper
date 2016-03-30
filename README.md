@@ -1,6 +1,6 @@
 Synopsis
 ========
-This project was originally designed to provide Darwin specific helper functions to the [CPCommon](https://github.com/bcarr092/CPCommon) library. However, at this point, it should simply be rolled into the CPCommon itself.
+This project was originally designed to provide Darwin-specific helper functions to the [CPCommon](https://github.com/bcarr092/CPCommon) library. However, at this point, it should simply be rolled into the CPCommon itself.
 
 #### To Do
  * Rolls this library into [CPCommon](https://github.com/bcarr092/CPCommon)
